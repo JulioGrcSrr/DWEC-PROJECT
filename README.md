@@ -24,17 +24,17 @@ Para desplegar en heroku tenemos dos formas principales y sencillas de hacerlo.
 
 La primera es utilizando los comando de git de heroku CLI 
 
--heroku login
+- heroku login
 
--heroku git:clone -a twitterbrowser ← el nombre del proyecto
+- heroku git:clone -a twitterbrowser ← el nombre del proyecto
 
--cd twitterbrowser
+- cd twitterbrowser
 
--git add.
+- git add.
 
--git commit -am “aqui puedes poner lo que quieras”
+- git commit -am “aqui puedes poner lo que quieras”
 
--git push heroku master
+- git push heroku master
 
 La otra forma de desplegar en heroku de forma sencilla sería mediante nuestro github 
 
