@@ -2,7 +2,12 @@ var Twit = require('twit');
 const express = require('express');
 const app = express();
 const server = require('http').Server(app);
+const path = require('path');
+
+const publicPath = path.resolve(__dirname, '../public');
 const port = process.env.PORT || 3000;
+app.use(express.static(publicPath));
+
 server.listen(port, (err) => {
 
     if (err) throw new Error(err);
