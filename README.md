@@ -17,7 +17,7 @@ The word to search must be change in the server
 
 
 
-Como desplegar una web app en heroku
+<h3><b>Como desplegar una web app en heroku</b></h3>
 
 
 Para desplegar en heroku tenemos dos formas principales y sencillas de hacerlo.
