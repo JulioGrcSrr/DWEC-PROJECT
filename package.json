@@ -1,5 +1,5 @@
 {
-  "name": "BuscaTwitterRandom",
+  "name": "TwitterBrowser",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Julio García Serrano",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
