@@ -2,8 +2,13 @@ var Twit = require('twit');
 const express = require('express');
 const app = express();
 const server = require('http').Server(app);
-const listener = server.listen(3002, function() {
-  console.log('Port number: ' + listener.address().port);
+const port = process.env.PORT || 3000;
+server.listen(port, (err) => {
+
+    if (err) throw new Error(err);
+
+    console.log(`Server running on ${ port }`);
+
 });
 const io = require('socket.io')(server);
 var fs = require('fs');
