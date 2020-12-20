@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Twitter Browser</title>
+    <meta name="description">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header id="banner">
+      <h1>Busca Twitter</h1>
+    </header>
+    <h2 id="banner2"></h2>
+    <div class="container">
+      <div class="tweet-container">
+        <div class="tweet-handle-container">
+          <span><a rel="nofollow" id="enlace" href="#" class="automatic">Ver Tweet</a></span>
+            <div class="tweet-handle-image">
+              <img id="user-image" src="img/image.jpg" />
+            </div>
+            <div class="tweet-handle-name">
+              <p id="user-name">Tweet Tracker</p>
+              <p id="user-description">Tracking tweets about</p>
+            </div>
+          </div>
+        <div class="tweet-content" id="content">
+            Tracking tweets
+        </div>
+        
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>  
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+      var socket = io();
+      var tweetArray = [];
+      var word = "";
+      var enlace = "Hola";
+      var index = 0;
+      var numTweets = 0;
+      $.ajax({
+          url: 'Index.js',
+          type: "POST",
+          data: {word:word}
+
+        }).done(function(data){
+          alert(data)
+    })
+      socket.on('connect',function(data){
+         console.log('connected');
+      })
+      socket.on('tweet', function (tweet) {
+          console.log(tweet.tweet);
+          var tweetbody = {
+            'text': tweet.tweet.text,
+            'userScreenName': "@" + tweet.tweet.user.screen_name,
+            'userImage': tweet.tweet.user.profile_image_url_https,
+            'userDescription': tweet.tweet.user.description,
+            'idtweet' : tweet.tweet.id_str,
+          }
+          try {
+            if(tweet.tweet.entities.media[0].media_url_https) {
+              tweetbody['image'] = tweet.tweet.entities.media[0].media_url_https;
+            }
+          } catch(err) { }
+          tweetArray.unshift(tweetbody);
+          numTweets++;
+          console.log(numTweets);
+          console.log(word);
+          console.log(tweetbody['idtweet']);
+      });
+
+      socket.on('messages' , function(data){
+        console.log(data);
+        word += data;
+        render(word);
+      });
+
+      socket.on('allTweet', function (tweet) {
+          console.log(tweet);
+          tweetArray=tweet;
+          loopArray();
+      });
+
+      function render(word){
+        let html = `<h2>${word}</h2`;
+        document.getElementById('banner2').innerHTML = html;
+      }
+
+      function renderEnlace(enlace){
+        let link = `<p>${enlace}</p>`;
+        document.getElementById('enlace').innerHTML = link;
+      }
+
+      function renderNum(numTweets){
+        let html = `<h2>${numTweets}</h2`;
+        document.getElementById('numtweets').innerHTML = html;
+      }
+
+      function loopArray() {
+        if(tweetArray.length > index) {
+          $(".img-container").removeClass('noimage');
+          var currentTweet = tweetArray[index];
+          var username = currentTweet.userScreenName;
+          var idtweetU = currentTweet.idtweet
+          document.getElementById('enlace').setAttribute('href', 'https://twitter.com'+'/'+ username +'/' + 'status' + '/' + idtweetU);
+          index ++;
+            $('#user-name').html(currentTweet.userScreenName);
+            $('#user-description').html(currentTweet.userDescription);
+            $('#content').html(currentTweet.text);
+            $("#user-image").attr("src",currentTweet.userImage);
+            if(currentTweet.image) {            
+              $("#image").attr("src",currentTweet.image);            
+            }else{
+               $(".img-container").addClass('noimage');
+            }
+        } else {
+          index = 0;
+        }
+        setTimeout(loopArray, 2000);
+      }
+    </script>
+  </body>
+</html>
