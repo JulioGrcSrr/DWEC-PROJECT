@@ -62,9 +62,9 @@ io.on('connection', function(socket) {
 
 
 var T = new Twit({
-  consumer_key:         
-  consumer_secret:      
-  access_token:         
-  access_token_secret: 
+  consumer_key:         'JWWAmmUuC32uzalf5nTDHEXFf',
+  consumer_secret:      'bcNhC4kzNr5EMD7xtoAyjs8Wl0EpqaYDjMr2hDKD4x4RGHIF5Q',
+  access_token:         '1330200043895263234-ri5oHvW6bQ1BYCbxdSTeKX6HEIf9eI',
+  access_token_secret:  'uN0rqQqdo5QSTZYKYhD32nyq8oYtqXeaFf33B250Fxgqy',
 });
   
